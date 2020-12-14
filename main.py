@@ -1,5 +1,4 @@
-from db.accounts_db import AccountInDB
-from db.accounts_db import create_account, update_account, get_account
+from db.accounts_db import AccountInDB, get_account_db, create_account_db
 
 from models.account_models import AccountIn, AccountOut
 
@@ -23,16 +22,16 @@ app = FastAPI()
 
 @app.post("/account/create/")
 async def create_account(account_in: AccountIn):
-    account_in_db = get_account(account_in.name)
-    if account_in_db == None:
-        result = create_account(account_in)
+    result = create_account_db(account_in)
+    print(result)
+    if result:
         return {"estado":"creado correctamente"}
     else:
         raise HTTPException(status_code=404, detail="La cuenta ya fue creada")
 
 @app.get("/account/get/{name}")
 async def get_account(name: str):
-    account_in_db = get_account(name)
+    account_in_db = get_account_db(name)
     if account_in_db == None:
         raise HTTPException(status_code=404,
                             detail="la cuenta no existe no existe")

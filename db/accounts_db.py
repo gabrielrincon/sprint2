@@ -1,6 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel
 
+from models.account_models import AccountIn
+
 
 class AccountInDB(BaseModel):
     id_account: int = 0
@@ -12,17 +14,32 @@ class AccountInDB(BaseModel):
 database_accounts = []
 generator = {"id":0}
 
-def get_account(name: str):
-    if name in database_accounts:
-        return database_accounts[name]
-    else:
-        return None
+def get_account_db(name: str):
+    for account in database_accounts:
+        print(account)
+        if account.name == name:
+            print("encontrado", account)
+            return account
+        else:
+            print("no es", account)
+    return None
 
-def create_account(accounts_in_db: AccountInDB):
-    generator["id"] = generator["id"] + 1
-    accounts_in_db.id_account = generator["id"]
-    database_accounts.append(accounts_in_db)
-    return accounts_in_db
+def create_account_db(accounts_in: AccountIn):
+    print("aqui")
+    print(accounts_in)
+    print(accounts_in.name)
+    if get_account_db(accounts_in.name) is None:
+        print("verdadero")
+        print(generator)
+        print(generator['id'])
+        generator['id'] = generator['id'] + 1
+        accounts_in.id_account = generator['id']
+        print(accounts_in)
+        database_accounts.append(accounts_in)
+        return True
+    else:
+        print("falso")
+        return False
 
 def update_account(accounts_in_db: AccountInDB):
     database_accounts[accounts_in_db.id_account] = accounts_in_db
