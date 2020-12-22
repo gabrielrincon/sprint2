@@ -1,4 +1,4 @@
-from db.accounts_db import get_account_db, create_account_db
+from db.accounts_db import get_account_db, create_account_db, add_balance_account_db
 
 from models.account_models import AccountIn, AccountOut
 
@@ -24,6 +24,15 @@ async def create_account(account_in: AccountIn):
     print(result)
     if result:
         return {"estado":"creado correctamente"}
+    else:
+        raise HTTPException(status_code=404, detail="La cuenta ya fue creada")
+
+@api.post("/account/add_balance/")
+async def add_balance_account(account_in: AccountIn):
+    result = add_balance_account_db(account_in)
+    print(result)
+    if result:
+        return {"estado":"balance_modificado_ok"}
     else:
         raise HTTPException(status_code=404, detail="La cuenta ya fue creada")
 

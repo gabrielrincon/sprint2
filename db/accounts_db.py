@@ -24,6 +24,17 @@ def get_account_db(name: str):
             print("no es", account)
     return None
 
+def add_balance_account_db(account_in: AccountIn):
+    for account in database_accounts:
+        print(account)
+        if account.name == account_in.name:
+            account.balance += account_in.balance
+            print("encontrado", account)
+            return account
+        else:
+            print("no es", account)
+    return None
+
 def create_account_db(accounts_in: AccountIn):
     print("aqui")
     print(accounts_in)
