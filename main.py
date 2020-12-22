@@ -34,7 +34,7 @@ async def add_balance_account(account_in: AccountIn):
     if result:
         return {"estado":"balance_modificado_ok"}
     else:
-        raise HTTPException(status_code=404, detail="La cuenta ya fue creada")
+        raise HTTPException(status_code=404, detail="La cuenta " + account_in.name + "no existe")
 
 @api.get("/account/get/{name}")
 async def get_account(name: str):
