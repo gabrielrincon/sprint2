@@ -32,9 +32,9 @@ async def add_balance_account(account_in: AccountIn):
     result = add_balance_account_db(account_in)
     print(result)
     if result:
-        return {"estado":"balance_modificado_ok"}
+        return {"estado":"balance_modificado_ok","cuenta":result}
     else:
-        raise HTTPException(status_code=404, detail="La cuenta " + account_in.name + "no existe")
+        raise HTTPException(status_code=404, detail="La cuenta " + account_in.name + " no existe")
 
 @api.get("/account/get/{name}")
 async def get_account(name: str):
